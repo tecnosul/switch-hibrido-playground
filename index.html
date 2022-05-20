@@ -6,6 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Switch Híbrido</title>
+
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon.webp" />
+
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
@@ -194,18 +197,24 @@
 
 		const elem = document.body
 		let full
-		document.querySelector('#fullscreen').addEventListener('click', () => {
-			if (!full) openFullscreen()
-			if (full) closeFullscreen()
-		})
+		const toggleFullScreen = document.querySelector('#fullscreen')
+		if (window.location !== window.parent.location) {
+			// The page is in an iframe
+			toggleFullScreen.remove()
+		} else if (toggleFullScreen) {
+			toggleFullScreen.addEventListener('click', () => {
+				if (!full) openFullscreen()
+				if (full) closeFullscreen()
+			})
+		}
+
+
 
 		document.addEventListener("fullscreenchange", function (e) {
 			if (window.innerHeight == screen.height) {
 				// browser is fullscreen
-				console.log('full');
 				full = true
 			} else {
-				console.log('out');
 				full = false
 			}
 		});
